@@ -7,6 +7,8 @@ local src = debug.getinfo(1, "S").source
 local abs = src:sub(1, 1) == "@" and vim.fn.fnamemodify(src:sub(2), ":p") or ""
 local PLUGIN_ROOT = abs ~= "" and vim.fn.fnamemodify(abs, ":h:h:h") or vim.fn.stdpath("config")
 
+local footer = " [i] Install  [x] Remove  [r] Refresh  [q] Close "
+
 local cfg = {
     parser_dir = vim.fn.stdpath("data") .. "/site/parser",
     query_dir = vim.fn.stdpath("data") .. "/site/queries",
@@ -83,12 +85,10 @@ local function remove(lang)
 end
 
 local function render(buf)
-    local lines = { " 🌳  TS Parsers Manager ", " ──────────────────────────" }
+    local lines = { " 🌳  Tree-sitter Parser Manager ", " ────────────────────────────────" }
     for _, l in ipairs(languages) do
         table.insert(lines, string.format("   %-12s  %s", l, vim.uv.fs_stat(ppath(l)) and "✅" or "❌"))
     end
-    table.insert(lines, " ──────────────────────────")
-    table.insert(lines, " [i] Install  [x] Remove  [r] Refresh  [q] Close ")
 
     vim.bo[buf].modifiable = true
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
@@ -96,7 +96,6 @@ local function render(buf)
 end
 
 function M.open()
-    local footer = " [i] Install  [x] Remove  [r] Refresh  [q] Close "
     local max_w = #footer
     for _, l in ipairs(languages) do max_w = math.max(max_w, #("   " .. l .. "  ✅")) end
 
@@ -112,7 +111,7 @@ function M.open()
         border = "rounded",
         row = math.floor((vim.o.lines - h) / 2),
         col = math.floor((vim.o.columns - w) / 2),
-        title = " 📦 Parsers ",
+        title = footer,
         title_pos = "center"
     })
     render(buf)
