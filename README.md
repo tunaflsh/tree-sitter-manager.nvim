@@ -57,8 +57,18 @@ This plugin was created following the **archival of the [nvim-treesitter/nvim-tr
 `q / <Esc>` - Close window  
 
 ## 📚 Queries
-Syntax highlighting queries (highlights.scm, injections.scm, etc.) were sourced from the archived https://github.com/nvim-treesitter/nvim-treesitter
+Syntax highlighting queries (highlights.scm, injections.scm, etc.) were sourced from the archived [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
  repository and placed in `runtime/queries/`.
+
+## 🔗 Parser Repository Links
+
+Parser repository URLs in `repos.lua` are sourced from the archived [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) repository. 
+
+> ⚠️ **Disclaimer**: These links are provided as-is. Due to the large number of parsers, each URL cannot be manually verified for current availability or compatibility. If you encounter a broken link, outdated revision, or build failure, please:
+> - Open an [issue](https://github.com/romus204/tree-sitter-manager.nvim/issues) with details
+> - Or submit a [pull request](https://github.com/romus204/tree-sitter-manager.nvim/pulls) with a fix
+
+Your contributions help keep this plugin reliable for everyone. 🙏
 
 ## ⚠️ Known Limitations
 
