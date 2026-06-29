@@ -1,15 +1,18 @@
+---@type nvim-ts.parsers
 return {
     ada = {
         install_info = {
             revision = "6b58259a08b1a22ba0247a7ce30be384db618da6",
             url = "https://github.com/briot/tree-sitter-ada",
         },
+        tier = 2,
     },
     agda = {
         install_info = {
             revision = "e8d47a6987effe34d5595baf321d82d3519a8527",
             url = "https://github.com/tree-sitter/tree-sitter-agda",
         },
+        tier = 2,
     },
     angular = {
         install_info = {
@@ -17,6 +20,7 @@ return {
             url = "https://github.com/dlvandenberg/tree-sitter-angular",
         },
         requires = { "html", "html_tags" },
+        tier = 2,
     },
     apex = {
         install_info = {
@@ -24,12 +28,14 @@ return {
             revision = "3597575a429766dd7ecce9f5bb97f6fec4419d5d",
             url = "https://github.com/aheber/tree-sitter-sfapex",
         },
+        tier = 2,
     },
     arduino = {
         install_info = {
             revision = "11dd46c9ae25135c473c0003a133bb06a484af0c",
             url = "https://github.com/tree-sitter-grammars/tree-sitter-arduino",
         },
+        tier = 2,
         requires = { "cpp" },
     },
     asm = {
@@ -37,6 +43,7 @@ return {
             revision = "839741fef4dab5128952334624905c82b40c7133",
             url = "https://github.com/RubixDev/tree-sitter-asm",
         },
+        tier = 2,
     },
     astro = {
         install_info = {
@@ -283,6 +290,7 @@ return {
             revision = "2520c3f934b3179bb540d23e0ef45f75304b5fed",
             url = "https://github.com/tree-sitter-grammars/tree-sitter-diff",
         },
+        tier = 2,
     },
     disassembly = {
         install_info = {
@@ -1874,6 +1882,20 @@ return {
             url = "https://github.com/uben0/tree-sitter-typst",
         },
     },
+    ucode = {
+        install_info = {
+            revision = "v0.3.0",
+            url = "https://github.com/m00qek/tree-sitter-ucode",
+        },
+        requires = { "ucode_tmpl" },
+    },
+    ucode_tmpl = {
+        install_info = {
+            location = "tmpl",
+            revision = "v0.3.0",
+            url = "https://github.com/m00qek/tree-sitter-ucode",
+        },
+    },
     udev = {
         install_info = {
             revision = "2fcb563a4d56a6b8e8c129252325fc6335e4acbf",
@@ -1897,20 +1919,6 @@ return {
         install_info = {
             revision = "4e0875f724d94d0c2ff36f9b8cb0b12f8b20d216",
             url = "https://github.com/ColinKennedy/tree-sitter-usd",
-        },
-    },
-    ucode = {
-        install_info = {
-            revision = "v0.3.0",
-            url = "https://github.com/m00qek/tree-sitter-ucode",
-        },
-        requires = { "ucode_tmpl" },
-    },
-    ucode_tmpl = {
-        install_info = {
-            location = "tmpl",
-            revision = "v0.3.0",
-            url = "https://github.com/m00qek/tree-sitter-ucode",
         },
     },
     uxntal = {

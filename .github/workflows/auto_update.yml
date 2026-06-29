@@ -1,0 +1,52 @@
+name: Auto parse update
+
+on:
+  schedule:
+    - cron: '30 0 * * MON'
+
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      issues: write
+      pull-requests: write
+    steps:
+
+      - uses: actions/checkout@v6
+
+      - name: Setup Neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: stable
+
+      - name: Setup tree-sitter
+        uses: tree-sitter/setup-action@v2
+        with:
+          install-lib: false
+
+      - uses: JohnnyMorganz/stylua-action@v4
+      - name: Pull request
+        run: ./scripts/nvim/update-parses.lua
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update report
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch-suffix: timestamp
+          delete-branch: true
+          title: '[Auto Update] Update parser'
+          body: Update ${{ env.UPDATED_PARSERS }}
+          labels: |
+            automated pr
+            auto update
+          assignees: Decodetalkers
+          reviewers: Decodetalkers
+          draft: false
