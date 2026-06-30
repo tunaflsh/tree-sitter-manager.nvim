@@ -35,6 +35,11 @@ jobs:
           install-lib: false
 
       - uses: JohnnyMorganz/stylua-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: v2.4.1
+          args: false
+
       - name: Update parsers
         run: ./scripts/nvim/update-parsers.lua --tier=${{ matrix.tier }}
 
