@@ -11,6 +11,7 @@ concurrency:
 jobs:
   stylua:
     name: Stylua Check
+    if: "!any(github.event.pull_request.labels)"
     runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@v4
@@ -22,6 +23,7 @@ jobs:
 
   detect-changes:
     name: Detect Changes
+    if: "!any(github.event.pull_request.labels)"
     runs-on: ubuntu-slim
     continue-on-error: true
     outputs:
@@ -41,11 +43,12 @@ jobs:
     name: Run Tests
     needs: [stylua, detect-changes]
     if: |
-      ${{ always() &&
-        needs.stylua.result == 'success' &&
-        (needs.detect-changes.outputs.code == 'true' ||
-         needs.detect-changes.result == 'failure') }}
-    runs-on: ubuntu-latest
+      always() &&
+      !contains(github.event.pull_request.labels.*.name, 'update-parsers') &&
+      needs.stylua.result == 'success' &&
+      (needs.detect-changes.outputs.code == 'true' ||
+       needs.detect-changes.result == 'failure')
+    runs-on: ubuntu-slim
 
     steps:
       - uses: actions/checkout@v4
@@ -63,3 +66,53 @@ jobs:
 
       - name: Run tests
         run: make test
+
+  test-labels:
+    name: Test Parsers from Labels
+    if: |
+      any(github.event.pull_request.labels) &&
+      !contains(github.event.pull_request.labels.*.name, 'update-parsers')
+    runs-on: ubuntu-slim
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: stable
+
+      - name: Setup tree-sitter
+        uses: tree-sitter/setup-action@v2
+        with:
+          install-lib: false
+
+      - name: Run Tests
+        env:
+          UPDATED_PARSERS: join(github.event.pull_request.labels.*.name, ',')
+        run: make test_all_queries $UPDATED_PARSERS
+
+  test-body:
+    name: Test Parsers from Body
+    if: contains(github.event.pull_request.labels.*.name, 'update-parsers')
+    runs-on: ubuntu-slim
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: stable
+
+      - name: Setup tree-sitter
+        uses: tree-sitter/setup-action@v2
+        with:
+          install-lib: false
+
+      - name: Run Tests
+        env:
+          UPDATED_PARSERS: ${{ github.event.pull_request.body }}
+        run: make test_all_queries $UPDATED_PARSERS
