@@ -35,8 +35,8 @@ return {
             revision = "11dd46c9ae25135c473c0003a133bb06a484af0c",
             url = "https://github.com/tree-sitter-grammars/tree-sitter-arduino",
         },
-        tier = 2,
         requires = { "cpp" },
+        tier = 2,
     },
     asm = {
         install_info = {
@@ -914,7 +914,7 @@ return {
     },
     inko = {
         install_info = {
-            revision = "v0.5.1",
+            revision = "v0.8.0",
             url = "https://github.com/inko-lang/tree-sitter-inko",
         },
         tier = 1,
@@ -1707,7 +1707,7 @@ return {
     },
     robot = {
         install_info = {
-            revision = "v1.3.0",
+            revision = "v1.4.0",
             url = "https://github.com/Hubro/tree-sitter-robot",
         },
         tier = 1,
@@ -2174,7 +2174,7 @@ return {
     },
     ucode = {
         install_info = {
-            revision = "v0.3.0",
+            revision = "v0.6.1",
             url = "https://github.com/m00qek/tree-sitter-ucode",
         },
         requires = { "ucode_tmpl" },
@@ -2183,7 +2183,7 @@ return {
     ucode_tmpl = {
         install_info = {
             location = "tmpl",
-            revision = "v0.3.0",
+            revision = "v0.6.1",
             url = "https://github.com/m00qek/tree-sitter-ucode",
         },
         tier = 1,
