@@ -29,7 +29,7 @@ jobs:
 
       - uses: JohnnyMorganz/stylua-action@v4
       - name: Pull request
-        run: ./scripts/nvim/update-parses.lua
+        run: ./scripts/nvim/update-parsers.lua
 
       - name: Create Pull Request
         id: cpr
