@@ -1,20 +1,27 @@
-name: Auto parse update
+name: Update Parsers
 
 on:
   schedule:
     - cron: '30 0 15 * *'
 
 jobs:
-  createPullRequest:
+  update-parsers:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - tier: 1
+            reviewers: ''
+          - tier: 2
+            reviewers: 'Decodetalkers,tunaflsh,romus204'
     permissions:
       contents: write
       id-token: write
       issues: write
       pull-requests: write
     steps:
-
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
       - name: Setup Neovim
         uses: rhysd/action-setup-vim@v1
@@ -28,25 +35,29 @@ jobs:
           install-lib: false
 
       - uses: JohnnyMorganz/stylua-action@v4
-      - name: Pull request
-        run: ./scripts/nvim/update-parsers.lua
+      - name: Update parsers
+        run: ./scripts/nvim/update-parsers.lua --tier=${{ matrix.tier }}
 
       - name: Create Pull Request
         id: cpr
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@v6
         with:
+          add-paths: lua/tree-sitter-manager/repos.lua
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Update report
-          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
-          author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
-          signoff: false
-          branch-suffix: timestamp
+          sign-commits: true
+          commit-message: "ops(parsers): update ${{ env.UPDATED_PARSERS }}"
+          branch: update-parsers-tier-${{ matrix.tier }}
           delete-branch: true
-          title: '[Auto Update] Update parser'
+          title: Update Parsers Tier ${{ matrix.tier }}
           body: Update ${{ env.UPDATED_PARSERS }}
           labels: |
             automated pr
             auto update
-          assignees: Decodetalkers
-          reviewers: Decodetalkers tunaflsh romus204
-          draft: false
+          assignees: tunaflsh
+          reviewers: ${{ matrix.reviewers }}
+
+      - name: Auto-Merge Tier 2
+        if: ${{ matrix.tier == 2 && steps.cpr.outputs.pull-request-number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge ${{ steps.cpr.outputs.pull-request-number }} --auto --squash
