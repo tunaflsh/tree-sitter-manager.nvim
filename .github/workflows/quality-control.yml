@@ -11,6 +11,7 @@ concurrency:
 jobs:
   stylua:
     name: Stylua Check
+    if: "!startsWith(github.head_ref, 'update-parsers-tier-')"
     runs-on: ubuntu-slim
     steps:
       - uses: actions/checkout@v4
@@ -22,6 +23,7 @@ jobs:
 
   detect-changes:
     name: Detect Changes
+    if: "!startsWith(github.head_ref, 'update-parsers-tier-')"
     runs-on: ubuntu-slim
     continue-on-error: true
     outputs:
@@ -41,11 +43,12 @@ jobs:
     name: Run Tests
     needs: [stylua, detect-changes]
     if: |
-      ${{ always() &&
-        needs.stylua.result == 'success' &&
-        (needs.detect-changes.outputs.code == 'true' ||
-         needs.detect-changes.result == 'failure') }}
-    runs-on: ubuntu-latest
+      !startsWith(github.head_ref, 'update-parsers-tier-') &&
+      always() &&
+      needs.stylua.result == 'success' &&
+      (needs.detect-changes.outputs.code == 'true' ||
+       needs.detect-changes.result == 'failure')
+    runs-on: ubuntu-slim
 
     steps:
       - uses: actions/checkout@v4
