@@ -8,8 +8,8 @@
     ```sh
     make test                   # run all modules on a predefined set of languages
     make test_xxx               # run tests/test_xxx.lua
-    make test       python bash # run only for python and bash
-    make test_xxx   python bash
+    make test       python,bash # run only for python and bash
+    make test_xxx   python,bash
     make test       all         # run all cases for all languages
     make test_xxx   all         # run test_xxx for all languages
     ```
