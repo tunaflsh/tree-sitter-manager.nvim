@@ -2,7 +2,7 @@ name: Auto parse update
 
 on:
   schedule:
-    - cron: '30 0 * * MON'
+    - cron: '30 0 15 * *'
 
 jobs:
   createPullRequest:
@@ -48,5 +48,5 @@ jobs:
             automated pr
             auto update
           assignees: Decodetalkers
-          reviewers: Decodetalkers
+          reviewers: Decodetalkers tunaflsh romus204
           draft: false
