@@ -41,11 +41,11 @@ jobs:
     name: Run Tests
     needs: [stylua, detect-changes]
     if: |
-      ${{ always() &&
-        needs.stylua.result == 'success' &&
-        (needs.detect-changes.outputs.code == 'true' ||
-         needs.detect-changes.result == 'failure') }}
-    runs-on: ubuntu-latest
+      always() &&
+      needs.stylua.result == 'success' &&
+      (needs.detect-changes.outputs.code == 'true' ||
+       needs.detect-changes.result == 'failure')
+    runs-on: ubuntu-slim
 
     steps:
       - uses: actions/checkout@v4
@@ -62,4 +62,6 @@ jobs:
           install-lib: false
 
       - name: Run tests
-        run: make test
+        env:
+          PARSERS: join(github.event.pull_request.labels.*.name, ',')
+        run: make test $PARSERS
