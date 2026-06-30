@@ -397,7 +397,7 @@ return {
             revision = "v2.0.0",
             url = "https://github.com/ValdezFOmar/tree-sitter-editorconfig",
         },
-        tier = 2,
+        tier = 1,
     },
     eds = {
         install_info = {
@@ -917,7 +917,7 @@ return {
             revision = "v0.5.1",
             url = "https://github.com/inko-lang/tree-sitter-inko",
         },
-        tier = 2,
+        tier = 1,
     },
     ispc = {
         install_info = {
@@ -1710,7 +1710,7 @@ return {
             revision = "v1.3.0",
             url = "https://github.com/Hubro/tree-sitter-robot",
         },
-        tier = 2,
+        tier = 1,
     },
     robots_txt = {
         install_info = {
@@ -2178,7 +2178,7 @@ return {
             url = "https://github.com/m00qek/tree-sitter-ucode",
         },
         requires = { "ucode_tmpl" },
-        tier = 2,
+        tier = 1,
     },
     ucode_tmpl = {
         install_info = {
@@ -2186,7 +2186,7 @@ return {
             revision = "v0.3.0",
             url = "https://github.com/m00qek/tree-sitter-ucode",
         },
-        tier = 2,
+        tier = 1,
     },
     udev = {
         install_info = {
