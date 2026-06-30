@@ -1,8 +1,8 @@
 name: Update Parsers
 
 on:
-  schedule:
-    - cron: '30 0 15 * *'
+  push:
+    branch: auto_update
 
 jobs:
   update-parsers:
@@ -12,9 +12,8 @@ jobs:
       matrix:
         include:
           - tier: 1
-            reviewers: ''
+            reviewers: tunaflsh
           - tier: 2
-            reviewers: 'Decodetalkers,tunaflsh,romus204'
     permissions:
       contents: write
       id-token: write
