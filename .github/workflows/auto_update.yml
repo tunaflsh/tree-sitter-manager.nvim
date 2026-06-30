@@ -1,8 +1,8 @@
 name: Update Parsers
 
 on:
-  schedule:
-    - cron: '30 0 15 * *'
+  push:
+    branch: auto_update
 
 jobs:
   update-parsers:
