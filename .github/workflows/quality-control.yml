@@ -13,6 +13,7 @@ jobs:
   stylua:
     name: Stylua Check
     runs-on: ubuntu-slim
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'auto-update') }}
     steps:
       - uses: actions/checkout@v4
       - uses: JohnnyMorganz/stylua-action@v4
@@ -24,6 +25,7 @@ jobs:
   detect-changes:
     name: Detect Changes
     runs-on: ubuntu-slim
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'auto-update') }}
     continue-on-error: true
     outputs:
       code: ${{ steps.filter.outputs.code }}
@@ -43,6 +45,7 @@ jobs:
     needs: [stylua, detect-changes]
     if: ${{
       always() &&
+      !contains(github.event.pull_request.labels.*.name, 'auto-update') &&
       needs.stylua.result == 'success' &&
       (needs.detect-changes.outputs.code == 'true' ||
        needs.detect-changes.result == 'failure')
@@ -67,3 +70,27 @@ jobs:
         env:
           PARSERS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
         run: make test $PARSERS
+
+  test-auto-update:
+    name: Test Parsers from Auto-Update PRs
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'auto-update') }}
+    runs-on: ubuntu-slim
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: stable
+
+      - name: Setup tree-sitter
+        uses: tree-sitter/setup-action@v2
+        with:
+          install-lib: false
+
+      - name: Run Tests
+        env:
+          UPDATED_PARSERS: ${{ github.event.pull_request.body }}
+        run: make test_all_queries $UPDATED_PARSERS
