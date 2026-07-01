@@ -37,7 +37,7 @@ function M.wait(languages, timeout)
         function()
             return not next(installer.installing)
         end,
-        50
+        1000
     )
     ]])
     local success = M.lua_get("success")

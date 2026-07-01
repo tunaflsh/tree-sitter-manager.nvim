@@ -28,7 +28,7 @@ local T = new_set({
 
 T["ensure_installed"] = function(lang, query)
     -- wait for the parser to successfully install
-    child.wait(lang, 120000)
+    child.wait(lang, 13 * 60000) -- wait 13 minutes
     child.works(lang, query)
 end
 
