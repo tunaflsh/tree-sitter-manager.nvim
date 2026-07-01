@@ -3,6 +3,7 @@ name: Update Parsers
 on:
   schedule:
     - cron: '30 0 15 * *'
+  workflow_dispatch:
 
 jobs:
   update-parsers:
