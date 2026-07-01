@@ -72,7 +72,7 @@ jobs:
         run: make test $PARSERS
 
   test-auto-update:
-    name: Test Parsers from Auto-Update PRs
+    name: Test Auto-Update
     if: ${{ contains(github.event.pull_request.labels.*.name, 'auto-update') }}
     runs-on: ubuntu-latest
 
