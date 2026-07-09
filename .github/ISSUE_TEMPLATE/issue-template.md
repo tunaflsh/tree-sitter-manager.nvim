@@ -7,5 +7,5 @@ assignees: ''
 
 ---
 
-- [ ] My problem has not been addressed by any existing open or closed issue and pull request.
-- [ ] My issue has not been fixed in the `develop` branch.
+- [ ] I have checked other open and closed issues and pull requests.
+- [ ] I have checked the `develop` branch the issue isn't fixed there.
