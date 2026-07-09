@@ -7,4 +7,5 @@ assignees: ''
 
 ---
 
-Before submitting your issue, please check if the `develop` branch has solved your problem.
+- [ ] My problem has not been addressed by any existing open or closed issue and pull request.
+- [ ] My issue has not been fixed in the `develop` branch.
