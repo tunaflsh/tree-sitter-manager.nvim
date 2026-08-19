@@ -266,4 +266,13 @@ function M.copy_dir(src, dst)
     end
 end
 
+function M.write_file(filename, content, mode)
+    local file = io.open(filename, mode or "w")
+    if not file then
+        error("could not open " .. filename .. " for writing")
+    end
+    file:write(content)
+    file:close()
+end
+
 return M
